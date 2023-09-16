@@ -3,6 +3,9 @@ import e from 'express'
 import 'express-async-errors'
 import * as dotenv from 'dotenv'
 dotenv.config()
+import path from 'path'
+import { dirname } from 'path'
+import { fileURLToPath } from 'url'
 import dbConnect from './connection/dbConnect.js'
 import cors from 'cors'
 import homeRouter from './routes/home.js'
@@ -14,6 +17,7 @@ import utilityRouter from './routes/medUtilities.js'
 import errorLog from './middleware/errorLog.js'
 
 const PORT = process.env.PORT || 3000
+const __dirname = dirname(fileURLToPath(import.meta.url))
 
 //Connect to the db
 dbConnect()
@@ -47,10 +51,12 @@ app.use('/api/utilities', utilityRouter)
 
 //Serve the frontend index.html file in production
 if (process.env.NODE_ENV === 'production') {
-    app.use(e.static(path.join('../', 'frontend', 'build')))
+    app.use(e.static(path.join(__dirname, '../frontend/build')))
 
     app.get('*', (req, res) => {
-        res.sendFile(path.join('../', 'frontend', 'build', 'index.html'))
+        res.sendFile(
+            path.join(__dirname, '../', 'frontend', 'build', 'index.html')
+        )
     })
 } else {
     app.use('/', homeRouter)
