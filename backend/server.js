@@ -1,4 +1,3 @@
-import path from 'path'
 import e from 'express'
 import 'express-async-errors'
 import * as dotenv from 'dotenv'
