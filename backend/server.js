@@ -50,11 +50,11 @@ app.use('/api/utilities', utilityRouter)
 
 //Serve the frontend index.html file in production
 if (process.env.NODE_ENV === 'production') {
-    app.use(e.static(path.join(__dirname, '../frontend/public')))
+    app.use(e.static(path.join(__dirname, '../frontend/build')))
 
     app.get('*', (req, res) => {
         res.sendFile(
-            path.join(__dirname, '../', 'frontend', 'public', 'index.html')
+            path.join(__dirname, '../', 'frontend', 'build', 'index.html')
         )
     })
 } else {
